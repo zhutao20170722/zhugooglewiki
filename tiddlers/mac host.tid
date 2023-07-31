@@ -1,0 +1,10 @@
+created: 20230731034309702
+modified: 20230731034421346
+tags: 
+title: mac host
+type: text/vnd.tiddlywiki
+
+
+```
+ssh-keygen -R 124.220.24.22
+```

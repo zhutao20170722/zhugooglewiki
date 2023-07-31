@@ -1,0 +1,37 @@
+created: 20230727012630071
+modified: 20230727013726300
+tags: 
+title: tiddly wiki git 配置
+type: text/vnd.tiddlywiki
+
+* 首先，确保你的系统已经安装了 Git。如果你的操作系统是基于 Linux 的，你可以使用以下命令安装 Git：
+```
+sudo apt-get update
+sudo apt-get install git
+```
+对于 Mac，你可以使用 Homebrew 安装 Git
+
+```
+brew install git
+```
+*接下来，在你的 TiddlyWiki 文件所在的目录下初始化一个新的 Git 存储库。打开一个命令行窗口，切换到该目录，然后输入以下命令：
+
+```
+git init
+```
+这将在当前目录下创建一个新的 .git 子目录，包含所有需要的 Git 存储库文件。
+
+* 现在，你可以添加你的 TiddlyWiki 文件到 Git 存储库。假设你的文件名是 my_tiddlywiki.html，你可以使用以下命令：
+
+```
+git add my_tiddlywiki.html
+```
+*在文件添加到 Git 之后，你需要提交这个改动。使用 git commit 命令来做到这一点
+
+```
+git commit -m "Initial commit of my TiddlyWiki"
+
+```
+在此之后，每次你更改你的 TiddlyWiki 文件时，你都需要再次运行 git add 和 git commit 命令来跟踪你的更改。
+
+

@@ -1,0 +1,14 @@
+created: 20230526144616944
+modified: 20230727015331975
+tags: write
+title: TiddlyWiki的Node.js版
+type: text/vnd.tiddlywiki
+
+# 安装Node.js
+# 安装TiddlyWiki打开命令行工具，然后输入以下命令来全局安装TiddlyWiki：
+
+```
+npm install -g tiddlywiki
+```
+
+
