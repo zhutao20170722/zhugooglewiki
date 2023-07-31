@@ -1,0 +1,29 @@
+created: 20230731044012324
+modified: 20230731044034329
+tags: 
+title: Git 中查看你的用户名
+type: text/vnd.tiddlywiki
+
+你可以通过以下命令在 Git 中查看你的用户名：
+
+```bash
+git config user.name
+```
+
+这条命令会返回你当前的 Git 用户名。这个用户名会被用作你所有 Git 提交的身份标识。
+
+如果你需要查看你的电子邮件地址，你可以使用以下命令：
+
+```bash
+git config user.email
+```
+
+这条命令会返回你当前的 Git 电子邮件地址。这个电子邮件地址也会被用作你所有 Git 提交的身份标识。
+
+如果你想查看所有的 Git 配置信息，你可以使用以下命令：
+
+```bash
+git config --list
+```
+
+这条命令会列出你所有的 Git 配置信息，包括用户名、电子邮件地址、别名等等。

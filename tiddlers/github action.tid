@@ -1,0 +1,39 @@
+created: 20230731042633588
+modified: 20230731042709238
+tags: git
+title: github action
+type: text/vnd.tiddlywiki
+
+GitHub Actions 是 GitHub 的持续集成/持续部署（CI/CD）工具，可以让你在你的仓库中自动运行各种工作流。以下是一些关于如何使用 GitHub Actions 的基本步骤：
+
+1. **创建一个新的工作流文件**：首先，你需要在你的仓库中创建一个新的工作流文件。这个文件需要位于 `.github/workflows` 目录中，并以 `.yml` 或 `.yaml` 结尾。例如，你可以创建一个名为 `.github/workflows/main.yml` 的文件。
+
+2. **配置你的工作流**：接下来，你需要在你的工作流文件中编写 YAML 代码来定义你的工作流。一个基本的工作流配置可能看起来像这样：
+
+```yaml
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Run a one-line script
+      run: echo Hello, world!
+```
+
+这个配置定义了一个名为 "CI" 的工作流，它会在每次有人推送到 `main` 分支或者创建一个目标为 `main` 分支的 pull request 时运行。它只有一个工作，工作中有两个步骤：第一步会检出你的仓库代码，第二步会在终端打印 "Hello, world!"。
+
+3. **触发你的工作流**：保存并提交你的工作流文件后，你的工作流将会在指定的事件发生时自动运行。你可以在你的仓库的 "Actions" 选项卡中查看你的工作流运行情况。
+
+4. **查看你的工作流结果**：在 "Actions" 选项卡中，你可以查看每个工作流运行的详细信息，包括每个步骤的日志、运行时间和结果。
+
+GitHub Actions 提供了很多灵活性，你可以根据你的需要配置各种各样的工作流。例如，你可以运行测试、构建和发布你的代码、自动创建和发布 GitHub Releases、自动部署到你的服务器等。你可以查阅 GitHub Actions 的官方文档来了解更多信息。
