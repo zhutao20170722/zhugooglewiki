@@ -1,0 +1,61 @@
+created: 20230731090122370
+modified: 20230801123616816
+tags: git
+title: 自建git
+type: text/vnd.tiddlywiki
+编程: 11
+
+<<toc filter:'[tag[Chapter]]'>>
+
+自建 Git 服务器的过程并不复杂，但需要一些 Linux 和网络基础知识。这里是一个简单的步骤，它展示了如何在 Ubuntu Linux 系统上建立一个基本的 Git 服务器。
+
+1. **安装 Git**
+
+首先，你需要在服务器上安装 Git。可以通过在命令行运行以下命令来完成：
+
+```bash
+sudo apt-get update
+sudo apt-get install git
+```
+
+2. **创建一个 git 用户**
+
+为了安全起见，通常建议为 git 服务创建一个专门的用户。以下是创建新用户的命令：
+
+```bash
+sudo adduser git
+```
+
+3. **创建一个裸仓库**
+
+裸仓库是一个没有工作目录的存储库，仅用于远程共享。在服务器上，你通常会使用裸仓库。这是在 `/home/git` 目录下创建一个裸仓库的命令：
+
+```bash
+su git
+cd
+mkdir project.git
+cd project.git
+git init --bare
+```
+
+4. **从客户端克隆仓库**
+
+在你的本地机器上，你可以使用 git clone 命令来克隆这个新创建的裸仓库。你需要替换 `<your-server-ip>` 为你的服务器的 IP 地址：
+
+```bash
+git clone git@<your-server-ip>:/home/git/project.git
+```
+
+5. **推送更改到服务器**
+
+现在，你可以开始在你的本地仓库中进行工作。当你准备好将你的更改推送到服务器时，你可以使用 git push 命令：
+
+```bash
+git push origin master
+```
+
+这样，你就设置好了一个基本的 Git 服务器，可以用于追踪和共享你的项目的更改。
+
+如果你需要更多的功能，如网页界面，问题追踪，合并请求等，你可能希望考虑使用一些更复杂的 Git 服务器软件，如 Gitea，GitLab，或者 Gogs。
+
+如果你想要更安全地运行你的 Git 服务器，你应该考虑使用 SSH 密钥对进行身份验证，而不是密码。这通常更安全，也更方便。

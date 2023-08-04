@@ -1,0 +1,17 @@
+created: 20230801145448243
+modified: 20230804021729756
+tags: 
+title: contents wiki
+type: text/vnd.tiddlywiki
+
+如果 TiddlyWiki 中没有 "contents" 菜单，那么可能是由于不同的主题或配置导致的。 "contents" 菜单通常用于显示当前文档的目录，方便导航和查看各个 Tiddler。
+
+如果您想要在 TiddlyWiki 中添加 "contents" 菜单，可以考虑以下几种方法：
+
+1. 使用插件：您可以搜索 TiddlyWiki 插件库，寻找可以添加 "contents" 菜单的插件。安装并启用这些插件后，菜单可能会在您的 TiddlyWiki 中出现。
+
+2. 自定义主题：如果您对 TiddlyWiki 的主题有一定的了解，您可以尝试在自定义主题中添加 "contents" 菜单的功能。
+
+3. 使用官方 "Table of Contents" 插件：TiddlyWiki 有一个官方的 "Table of Contents" 插件，可以帮助您快速添加目录。您可以通过以下链接了解更多信息：https://tiddlywiki.com/#Table%20of%20Contents%20Macro
+
+无论您选择哪种方法，确保在进行任何更改之前备份您的 TiddlyWiki 文件，以免意外丢失数据。如果您对 TiddlyWiki 的配置和主题定制不太熟悉，建议先咨询 TiddlyWiki 社区或查阅相关文档，以获得更详细的指导和帮助。

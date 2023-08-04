@@ -1,0 +1,10 @@
+created: 20230803054113868
+dependents: 
+description: plugin
+list: readme config
+modified: 20230803055021914
+name: Menu Bar
+plugin-type: plugin
+tags: $:/plugins/tiddlywiki/filesystem
+title: $:/plugins/tiddlywiki/menubar
+type: application/json

@@ -1,0 +1,40 @@
+created: 20230803031431750
+modified: 20230803070902758
+tags: 编程
+title: 邮储挂机
+type: text/vnd.tiddlywiki
+
+
+```
+import pyautogui
+import time
+# print(pyautogui.position())
+
+
+def lesson(mm, l):
+    time.sleep(3)
+    # mm = [3, 13, 3, 13]  # 视频时间长度 l为第几个便签
+    pyautogui.moveTo(60 + 520 * (l - 1), 175)
+    pyautogui.click()
+    time.sleep(1)
+    # (x=2273, y=1129)学习的位置(x=59, y=172)(x=332, y=176)
+    pyautogui.moveTo(2273, 1241)
+
+    pyautogui.click()
+    time.sleep(5)
+    pyautogui.press('enter')
+    for m in mm:
+        time.sleep(60 * m + 10)
+        pyautogui.moveTo(x=1748, y=1054)  # 播放完成位置
+        pyautogui.click()
+
+
+# # lesson([25, 25, 23, 24, 21, 20, 11,
+# #         23, 23, 18, 21, 17, 15, 25, 9, 22, 12, 12, 21, 25, 22], 1)
+# lesson([18, 14, 13, 18, 21, 14, 21, 18], 1)
+lesson([8, 12, 9, 16, 9, 7, 12, 11, 10, 13, 7, 5, 13, 9, 9], 1)
+lesson([9, 8, 17, 7, 7, 20, 13, 7, 8, 10, 23, 5, 6, 5, 10,
+        12, 15, 17, 19, 25, 25, 12, 23, 16, 11, 16, 18, 6], 2)
+lesson([11, 16, 10, 11, 13, 12, 10, 12, 10, 8, 9, 13], 3)
+
+```

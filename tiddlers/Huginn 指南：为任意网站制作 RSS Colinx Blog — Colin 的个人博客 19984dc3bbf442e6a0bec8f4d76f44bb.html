@@ -1,0 +1,726 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Huginn 指南：为任意网站制作 RSS :: Colinx Blog — Colin 的个人博客</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="19984dc3-bbf4-42e6-a0be-c8f4d76f44bb" class="page sans"><header><h1 class="page-title">Huginn 指南：为任意网站制作 RSS :: Colinx Blog — Colin 的个人博客</h1><p class="page-description"></p></header><div class="page-body"><p id="dbee91a5-b535-4168-89a2-aa936f42a101" class="block-color-gray"><a href="https://blog.colinx.one/posts/huginn%E6%8C%87%E5%8D%97%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9Crss/">https://blog.colinx.one/posts/huginn%E6%8C%87%E5%8D%97%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9Crss/</a></p><p id="e18a35a7-dbb0-4ea8-80f3-be613cd504db" class="">
+</p><p id="1f4e8947-f4f2-4205-9e07-6e955d989a01" class="">Huginn 使用多个不同功能的 Agent 组合搭配来实现一系列功能，一个 Agent 可以执行特定的操作，并产生一个 Event，你可以指定他产生的 Event 由哪个 Agent 接收处理。</p><p id="c554d365-ec70-4b45-b041-4b8914794fd4" class="">比如我们需要使用 WebSite Agent 来爬取某个网站上的列表内容，爬取后列表的每一项会生成一个 Event，我们可以指定一个 Output Agent 来接收这些 Event，并将其转换为 RSS 的格式进行输出，复制 Output Agent 返回给你的 URL 就可以进行订阅啦，Huginn 爬取网站生成 RSS 的基本原理就是这样。</p><h2 id="61291c9f-46ce-430a-9e3f-06f88c9e388a" class="">Huginn 爬取普通网页制作 RSS</h2><p id="96d52301-b9eb-488a-ade5-90ed844525f5" class="">右键网页打开开发者工具，屏幕会分出一部分空间显示开发者工具窗口，点击左上角的按钮再把鼠标移动到页面上可以选择页面的某一个元素，比如这里我们要爬取推荐文章列表，推荐文章列表的每一项都有同样的样式，我们可以使用 CSS 选择器来指定爬取该项</p><figure id="3bfb12a7-6313-4905-8f02-2723d2a3200e" class="image"><a href="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207138.png"><img style="width:700px" src="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207138.png"/></a></figure><p id="67b515e9-d338-43cd-9c87-959733134072" class="">该元素可以用 CSS 选择器<code>.meiwen</code> 选择到。</p><p id="d3a38aba-a2dc-4052-97e8-1089a93c6385" class=""><strong>Tips:</strong> class=xxx 则使用<code>.xxx</code>, 如果为 id=xxx 则使用<code>#xxx</code></p><p id="7382b761-bca9-411e-b59f-ba6b7d735bd3" class="">该标签是 a 标签，我们可以继续限定一下条件，使用 <code>a.meiwen</code></p><p id="39fd952e-f44f-415d-8e21-067c31e9533a" class="">如果要限制必须是 h2 标签下的带有 meiwen 的 class 属性的 a 标签，可以使用 <code>h2 a.meiwen</code></p><p id="33333a8b-0507-42bb-93c1-130046fe678a" class="">如果要再加一个限制，是列表元素 li 下面的 h2 标签里带有 meiwen 的 class 属性的 a 标签，可以使用 <code>li h2 a.meiwen</code></p><p id="3e00c208-bf73-4a47-881f-1ba5bac3b612" class="">添加其他附加限定条件以此类推</p><p id="4da3ecf9-798c-461e-9a5f-49793acef56e" class="">你也可以在右侧 Style 面板里点击加号添加一个自定义样式，输入 CSS 选择器，浏览器会自动高亮符合条件的网页元素，你可以使用这个功能来检验你写的 CSS 选择器是否正确以及是不是提取的你想要的内容</p><figure id="b39285d7-2e13-4cfc-9f15-70b2f26f8d5b" class="image"><a href="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207716.png"><img style="width:700px" src="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207716.png"/></a></figure><p id="f088e1e8-9f4e-493c-b278-eed44e178ae2" class="">接下来在 Huginn 里创建一个 Scenario，然后点击新建一个 Agent，类型选择 WebSite Agent，填写一个名称，并在最下面的配置处指定你要爬取的网页元素</p><blockquote id="267b600d-d096-40b5-9e69-762e81314d59" class=""><p id="b9fd81a7-b10a-44fa-ae78-805c71e4abca" class="">The Website Agent scrapes a website, XML document, or JSON feed and creates Events based on the results.</p></blockquote><p id="2d460ff1-8d4d-4f0c-95fa-63edddce447c" class="">以爬取 url 为例，css 表示使用 css 选择器选择网页元素，value 表示从哪里获取对应的值，对于刚才我们选取的一个元素来说</p><p id="98fff229-e786-47f4-b085-eaefda83f046" class="">href 属性里面的内容是他的链接，title 属性里面的内容则是他的标题。接下来在 value 中填写 <code>@href</code> 指定从 href 属性提取内容，就可以取到链接地址了</p><blockquote id="1251538f-55e1-44b4-ab01-7f56ce8ecb2f" class=""><p id="1fd01d5a-c347-48a8-9586-c1e9c962b6c0" class=""><strong>Pro Tips:</strong></p><p id="f5f1cb3c-0385-4f8a-804a-e7e5d3127909" class="">如果是纯文本节点或是想提取标签内嵌的文本，value 里可以填写 <code>string(.)</code></p><p id="1cd0dd81-5149-4615-8297-262c475d89a8" class="">如果想删除多余的空格，可以使用 <code>normalize-space(.)</code></p></blockquote><blockquote id="e8ec5f00-f0be-4a7d-b2ac-71494040db43" class=""><p id="23b4ea11-3416-42bb-b89b-9eb412de4016" class=""><strong>Pro Tips 2:</strong></p><p id="cd21ebff-43b8-4d3e-95ee-ff7e7a2b9206" class="">字符串处理函数和标签属性值变量可以一起使用，如 <code>normalize-space(@title)</code> 可以获取该标签的 title 属性值并删除多余的空白字符</p></blockquote><figure id="5b95a39d-072e-48c2-ae4d-3f26d6cfa0a4" class="image"><a href="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207717.png"><img style="width:700px" src="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207717.png"/></a></figure><p id="60d0d573-ac4b-47fa-9f3b-99feb7640b38" class="">接下来点击 Dry Run 按钮进行测试，不出意外我们会得到一个 json 的输出，里面包括我们爬取到的每一项他的 url 和 title。</p><p id="9556ee1d-a859-429e-8074-60b06c858392" class="">如果没有成功，你可能需要删掉上面没有使用到的 hovertext 节点，因为该项指定的内容在我们刚才的网页中并不存在。</p><figure id="d5892de3-3436-474e-9574-1132dfa592b8" class="image"><a href="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207718.png"><img style="width:700px" src="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207718.png"/></a></figure><p id="eb825cc8-c760-4f57-bf36-805f180e94fa" class="">点击 Save 保存，我们开始下一步输出 RSS。在刚才的 Scenario 中再新建一个 Agent，选择 Data Output Agent，并设置他的名字和 Source Agent</p><blockquote id="248e9f6e-9158-4f85-b831-ad341cbd1385" class=""><p id="5e192a5e-d212-46d5-bf4a-d8c5e1b94b13" class="">The Data Output Agent outputs received events as either RSS or JSON. Use it to output a public or private stream of Huginn data.</p></blockquote><figure id="750a24ec-41fd-45a1-8dd8-8fef18bc307e" class="image"><a href="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207719.png"><img style="width:700px" src="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207719.png"/></a></figure><p id="1ef1efea-c81c-4ddc-b9ec-fdf11be69c1c" class=""><strong>Propagate immediately</strong> 是指即时处理来自 Source Agent 的 Event，启用他方便我们调试，但会略微增加服务器负载，你可以自行决定是否使用。</p><figure id="927e088d-943e-4eba-9467-0f1dc8c7a2b0" class="image"><a href="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207720.png"><img style="width:700px" src="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207720.png"/></a></figure><p id="521dd3f2-2339-4605-81ac-942e75234629" class="">在 secret 字段中为你的这个 RSS 标注一个英文的名字，修改 title 字段标注你的 RSS 的名字。item 字段是每条文章会有的属性，一般来说主要就 title 和 link，分别设置为上文我们提取的值的变量名。这里添加一个 guid 字段，这是一篇文章的唯一标识符，避免 RSS 阅读器读到的文章标题不同但是内容相同，常见于某篇文章的标题被修改，这会导致 RSS 阅读器内出现多篇重复文章。</p><p id="4edb0dc0-c09a-43ee-b427-f6f75ac2f230" class="">此外建议增加一个 link 字段，值设置为与爬取的网站的主域名一致，避免网站内使用相对链接开头的资源无法正常加载。</p><figure id="f5e95c83-3d3e-4d7b-a26a-2b7e635b058d" class="image"><a href="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207721.png"><img style="width:700px" src="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207721.png"/></a></figure><figure id="1c8d5f21-4e13-441c-8f6f-a732e8326fd9" class="image"><a href="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207722.png"><img style="width:700px" src="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207722.png"/></a></figure><p id="2998e376-ce17-4ae8-a368-fd9ea0920d9b" class="">点击 Save 保存，回到 Scenario 界面，第一次需要手动点击运行一下刚才的 Website Agent。稍等片刻后台会进行爬取，右上角会显示产生了多少个 Event。再点开刚才设置的 Data Output Agent 查看详情，vola！右侧就会显示生成的 RSS 链接了，复制以 xml 结尾的链接到 RSS 阅读器中就可以订阅啦🎉</p><figure id="7aec021c-8ce3-43bf-b1a1-99618089f934" class="image"><a href="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207723.png"><img style="width:700px" src="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207723.png"/></a></figure><p id="b45723c7-83e6-495b-89bc-0eb4c75e6a72" class="">如果你的配置正确但是 WebSite Agent 又没有输出任何内容的话，那么你要爬取的站点的内容应该是通过 JavaScript 在你带开浏览器时动态生成的。</p><blockquote id="633ac807-ec61-4bf4-ab38-5e5f7c3e9d7d" class=""><p id="e74339ba-76a1-43be-be2a-ac546b61e643" class=""><strong>Pro Tips:</strong></p><p id="995efcba-4705-415e-8af3-b26ed1210f38" class="">你可以右键网页在开发人员菜单中点击显示源代码，然后用 Ctrl+F 搜索你在页面上见到的想爬取的某一条内容，如果有说明该网站的页面时静态的，否则说明你要爬取的内容并不是静态的。</p></blockquote><p id="989cdb6f-8303-45ba-9ee1-815d06497938" class="">要爬取这样的站点，我们需要模拟浏览器操作，执行页面上的 JavaScript 脚本，待数据生成完毕后再使用上面的方法去爬取内容。要模拟浏览器操作，这里介绍两个方案：一个是利用 browserless 的无头浏览器，另一个是使用在线 PhatomJS 服务。</p><h2 id="a86a9784-2c9c-472b-9894-37a7e75fcd52" class="">使用 Huginn+Browserless 为动态网页生成 RSS</h2><p id="10424912-db2d-4c4b-aa20-8383bea82cc5" class="">部署了 <a href="https://github.com/Colin-XKL/RSSmanX">RSS Man X</a> 的完整版的话默认已经包含 huginn 和 browserless 服务，无需重复安装。且 huginn 可以通过 <code>service.browserless:3000</code> 访问到 browserless 服务。</p><p id="5970af25-7b84-41b7-8e61-7764a0580a9c" class="">总体步骤与上文一样，不过因为被抓取的内容是通过 JavaScript 动态生成的，所以直接使用 WebSite Agent 是抓取不到东西的，我们需要先使用 Post Agent 向 browserless 服务发送指令，让他帮我们模拟浏览器操作，再将最终完整的网页返回给我们，再使用 WebSite Agent 进行后续处理。</p><blockquote id="b6d1aa80-a303-4e3d-9780-78e2e3f32cd6" class=""><p id="d050f4d1-c405-4f43-affa-a089b14d278e" class="">A Post Agent receives events from other agents (or runs periodically), merges those events with the Liquid-interpolated contents of payload, and sends the results as POST (or GET) requests to a specified url. To skip merging in the incoming event, but still send the interpolated payload, set no_merge to true.</p></blockquote><p id="eb4cb1f8-f5e1-4805-af12-13eeeb0981d2" class="">接下来以<a href="https://pccz.court.gov.cn/pcajxxw/pcgg/ggdh?lx=0">这个网站</a>为例介绍一下，这个列表页的内容是由 JavaScript 动态生成的</p><figure id="5ba7df7d-d8fc-4335-96ba-a4792b4d147b" class="image"><a href="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207724.png"><img style="width:700px" src="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207724.png"/></a></figure><p id="235f1007-a492-4a9a-a3b7-54f5fd12b449" class="">按照以下内容设置你的 Post Agent</p><pre id="aa023b41-cd23-4ac0-9694-00c4766acbb3" class="code code-wrap"><code>{
+  &quot;post_url&quot;: &quot;http://service.browserless:3000/content&quot;,
+  &quot;expected_receive_period_in_days&quot;: &quot;1&quot;,
+  &quot;content_type&quot;: &quot;json&quot;,
+  &quot;method&quot;: &quot;post&quot;,
+  &quot;payload&quot;: {
+    &quot;url&quot;: &quot;https://pccz.court.gov.cn/pcajxxw/pcgg/ggdh?lx=0&quot;
+  },
+  &quot;headers&quot;: {
+    &quot;Cache-Control&quot;: &quot;no-cache&quot;,
+    &quot;Content-Type&quot;: &quot;application/json&quot;
+  },
+  &quot;emit_events&quot;: &quot;true&quot;,
+  &quot;no_merge&quot;: &quot;false&quot;,
+  &quot;output_mode&quot;: &quot;clean&quot;
+}
+</code></pre><p id="8d38d2e4-68a7-47c4-b4ac-739ae4ac0e90" class="">其中 <code>post_url</code> 为你的 browserless 实例地址，如果你使用了 RSS MAN X 里的 Huginn 可以直接向上面一样填写。<code>payload</code> 中的 <code>url</code> 字段填写你需要的网页地址。注意 emit_events 要设置为 <code>true</code>，这样才方便我们后续使用 WebSite Agent 操作。</p><p id="cddae16b-22ef-4a35-9cba-75e6896ddfca" class="">点击 Dry Run，如果能返回一个带有 <code>body</code> 字段且里面有文本内容说明调用成功。</p><p id="ad9fd9f7-0f08-4c37-be51-a5dbfa32cc5c" class="">调用不成功检查一下配置，以及是不是我们的爬虫被目标网站拦截了。若是爬虫被拦截可参考文末的解决方案。</p><figure id="f1e0b030-4883-4dbe-920d-bd2abe9e5e73" class="image"><a href="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207725.png"><img style="width:700px" src="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207725.png"/></a></figure><p id="40d1306f-241c-49ed-aa82-3bbb507bbbd8" class="">接下来点击 Save 保存，再新建一个 Website Agent，Source 设置为刚才的 Post Agent。</p><pre id="f195ec33-a26b-499c-988a-10d000e5e584" class="code code-wrap"><code>{
+  &quot;expected_update_period_in_days&quot;: &quot;2&quot;,
+  &quot;data_from_event&quot;: &quot;{{ body }}&quot;,
+  &quot;type&quot;: &quot;html&quot;,
+  &quot;mode&quot;: &quot;on_change&quot;,
+  &quot;extract&quot;: {
+    &quot;url&quot;: {
+      &quot;css&quot;: &quot;ul#wslb li a&quot;,
+      &quot;value&quot;: &quot;normalize-space(@href)&quot;
+    },
+    &quot;title&quot;: {
+      &quot;css&quot;: &quot;ul#wslb li a&quot;,
+      &quot;value&quot;: &quot;@title&quot;
+    },
+    &quot;author&quot;: {
+      &quot;css&quot;: &quot;ul#wslb li div.center&quot;,
+      &quot;value&quot;: &quot;normalize-space(.)&quot;
+    }
+  }
+}
+</code></pre><p id="d0a4f9a0-fc5b-46ff-b581-a1997c6cdda3" class="">注意修改 <code>data_from_event</code> 的值，其他地方与爬取普通网站一样。再新建并配置一下 Output Agent，RSS 的链接就出来了</p><figure id="2654b0ce-3e92-4d12-a818-441ccccdf6ea" class="image"><a href="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207726.png"><img style="width:700px" src="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207726.png"/></a></figure><h2 id="5885d42a-e9fa-4483-aaab-be07a33ef450" class="">使用 PhantomJS 为动态页面生成 RSS</h2><p id="8fcc6326-f337-4872-b3dd-ae31a8438bfe" class="">首先需要到 <a href="https://phantomjscloud.com/">Phantom Js Cloud 的官网</a>注册一个账户，每个账户官方提供了一定的免费额度，每天大概可以爬取 500 个页面，对于做 RSS 来说妥妥的够用了。注册之后可以得到一个 API KEY，这个待会会使用到。</p><p id="307518e8-d57e-4deb-ab1d-c804b2b32b47" class="">接下来新建一个 Phantom JS Cloud Agent，填写基本的名称、API KEY 和目标 URL，render type 选择 html。底下 User Agent 建议改用真实的浏览器 UA，减少触发反爬虫的可能性。如果不知道自己的 UA 可以到这个网站查看当前浏览器的 UA，复制字符串即可。如果懒得查也可以用这个</p><pre id="0d867bcf-766f-4b59-a58a-6a10a21fb3d4" class="code code-wrap"><code>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.81 Safari/537.36
+</code></pre><blockquote id="79a7af1b-2aa0-4680-b3a6-8b4627261628" class=""><p id="fed49faf-000e-4a62-bbcb-58f43d03233e" class="">This Agent generates PhantomJs Cloud URLs that can be used to render JavaScript-heavy webpages for content extraction.</p><p id="389a4514-732f-4876-95ca-d4cc20f550a0" class="">URLs generated by this Agent are formulated in accordance with the PhantomJs Cloud API. The generated URLs can then be supplied to a Website Agent to fetch and parse the content. Sign up to get an api key, and add it in Huginn credentials.</p></blockquote><p id="c355d14c-ae64-4159-beaf-9304cf2426a2" class="">点击 Dry Run 后会返回一条 url，返回格式类似这样</p><p id="4ecb3aeb-e199-4ea3-96fe-81654bda19e4" class="">之后创建一个 WebSite Agent，Source Agent 设置为上面的 Phantom JS Cloud Agent，然后稍微改一下 url 的部分</p><pre id="6deaf43d-af96-474a-b6f2-81abe9116b37" class="code code-wrap"><code>{
+  &quot;expected_update_period_in_days&quot;: &quot;2&quot;,
+  &quot;url_from_event&quot;: &quot;{{url}}&quot;,
+  &quot;type&quot;: &quot;html&quot;,
+  &quot;mode&quot;: &quot;on_change&quot;,
+  &quot;extract&quot;: {...}
+}
+</code></pre><p id="70810e7d-94d7-407f-89ea-273aaf7b5cc7" class="">注意将原来的 <code>url:??</code> 的部分更改为 <code>&quot;url_from_event&quot;: &quot;{{url}}&quot;</code>, 这样就指定使用 Phantom JS Cloud 为我们获取的完整网页，接下来的操作就大同小异了。配置好要爬取的字段和规则后点击 Dry Run 就可以看到结果</p><figure id="e7717653-31a6-4294-ab1f-80757763b843" class="image"><a href="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207727.png"><img style="width:700px" src="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207727.png"/></a></figure><p id="61d804ee-e6e7-44c4-9d20-a736985fe6ca" class="">这里是刚才的 Agent 产生的一个 Event。这里除了 url 和 title 我还提取了 date 字段。在 Output Agent 中，可以配置为每一条文章输出发布时间的信息。对于这种规整的日期字母串，可以使用 <code>{{ date | date: %F }}</code> 进行解析并格式化输出为 rss 规范的时间格式如果没有配置的话，每篇文章的发布时间显示的都是一样的，为 Huginn 爬虫更新的时间。</p><pre id="0de2b1dc-a14d-4076-aa47-b87a0b424df1" class="code code-wrap"><code>&quot;item&quot;: {
+      &quot;title&quot;: &quot;{{title}}&quot;,
+      &quot;link&quot;: &quot;{{url}}&quot;,
+      &quot;pubDate&quot;: &quot;{{ date | date: %F }}&quot;
+    },
+</code></pre><blockquote id="7951449a-60c0-46d7-991a-977c9a245cdd" class=""><p id="0b86555e-818e-4bd1-8854-5cde1d0d83f9" class=""><strong>Pro Tips:</strong></p><p id="ee51de9f-a12f-4fbc-b4af-9761d96e2534" class="">Huginn 解析日期</p><p id="ac1b7f92-e6f7-4ad7-bca3-ab47c6fa0986" class="">注意 <code>{{ date | date: %F }}</code> 里面，第一个 <code>date</code> 是上面的 Website Agent 产生的 Event 里面的变量名，第二个 <code>date</code> 是 Huginn 使用的 Liquid 模版引擎语法里内置的一个 filter，可以理解为有特定功能的函数</p></blockquote><figure id="547b2ff7-6732-4624-bb76-9e92ac02fd19" class="image"><a href="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207637.png"><img style="width:700px" src="Huginn%20%E6%8C%87%E5%8D%97%EF%BC%9A%E4%B8%BA%E4%BB%BB%E6%84%8F%E7%BD%91%E7%AB%99%E5%88%B6%E4%BD%9C%20RSS%20Colinx%20Blog%20%E2%80%94%20Colin%20%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%2019984dc3bbf442e6a0bec8f4d76f44bb/202205082207637.png"/></a></figure><h2 id="e6e39d49-4ae6-44ee-9543-196822c67b8b" class="">FAQ</h2><ul id="98134469-c297-4671-bf00-3f56f91cea6e" class="bulleted-list"><li style="list-style-type:disc"> <p id="86255434-e5e0-409e-ad73-4c15ebc83c98" class=""><strong>为什么启动 docker 容器后访问 Huginn 显示网络错误？</strong></p><p id="af3979ec-6e77-4692-aadb-8a8d11ac6b9e" class="">Huignn 冷启动较慢，需要等待三五分钟。如果还是不行，检查端口映射和防火墙设置</p></li></ul><ul id="f0c0d3aa-cbd9-4bfa-ae3a-822ff4a8619b" class="bulleted-list"><li style="list-style-type:disc"> <p id="54d79809-85e8-44f1-874e-f3fb43051d7d" class=""><strong>为什么抓取到的包含相对路径的结果，网页上可以点击访问，但是生成的 RSS 不能正常使用？</strong></p><p id="cd5b332b-7308-4b50-a476-84c9a0d0e1e4" class="">检查 link 的设置，有些网站只是域名，有些网站有子目录，具体查看该网页源码中 head 节点里 base url 的设置</p></li></ul><ul id="f9cec89f-6add-47df-b8ca-37783a5b2838" class="bulleted-list"><li style="list-style-type:disc"> <p id="b0cc3992-64ab-4c1f-9922-270f4af20713" class=""><strong>如何对爬取到的某一项的字符串做更高级更复杂的处理？</strong></p><p id="c25a0408-b34e-484c-9016-d330cc7d49eb" class="">可以参考 <a href="https://github.com/huginn/huginn/wiki/Formatting-Events-using-Liquid">Hugnn 官方对 Liquid 语法的文档</a>以及 <a href="https://shopify.dev/api/liquid">Shopify 官方关于 Liquid 模板的语法文档</a></p></li></ul><ul id="5329212a-df61-421d-a06d-1509d7bf29dd" class="bulleted-list"><li style="list-style-type:disc"> <p id="b18a8197-0810-4d22-96b0-859253bd9ee5" class=""><strong>为什么部署了 Huginn，等了很长时间都无法访问后台页面？</strong></p><p id="62e3f7e3-906d-4248-a5d4-000b2ed61c1b" class="">若部署后某个应用一直无法通过浏览器访问，请检查是否绑定到了 6000/6666 等特殊端口，浏览器会拦截对这些端口的访问参见<a href="https://blog.colinx.one/posts/docker-compose%E7%9A%84%E9%94%99%E8%AF%AF%E4%BD%BF%E7%94%A8%E5%A7%BF%E5%8A%BF/">这里</a></p></li></ul><ul id="db45d30d-eaaa-47f8-9d49-a248f56d9919" class="bulleted-list"><li style="list-style-type:disc"> <p id="d32512bd-d1fb-4f58-abbc-56c3720d5920" class=""><strong>Huginn 爬虫访问目标网站被拦截了怎么解决</strong> 介绍几个基本的反反爬虫策略：</p><ol type="1" id="ed94132f-d947-43e2-a26a-7ec337dd2845" class="numbered-list" start="1"><li>带上 User Agent，要求是真实的浏览器 UA。</li></ol><ol type="1" id="69d62471-cf85-4cd4-a34b-df6e9f307121" class="numbered-list" start="2"><li>Browserless 去掉默认会和请求一起发送的可以被识别为爬虫的特征参数，设置 browserless 的环境变量 <code>DEFAULT_HEADLESS=false</code></li></ol><ol type="1" id="272d9342-42ff-4960-b181-0890a4e6db9a" class="numbered-list" start="3"><li>使用随机代理 IP，适用于因爬取频率达到爬虫阈值</li></ol></li></ul><h2 id="8f4191d6-69a1-4a53-89db-6820b6293708" class="">扩展阅读</h2></div></article></body></html>

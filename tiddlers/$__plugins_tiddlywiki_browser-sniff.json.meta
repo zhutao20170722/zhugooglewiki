@@ -1,0 +1,10 @@
+created: 20230803071319430
+dependents: 
+description: Browser feature detection
+list: readme usage
+modified: 20230803071626126
+name: Browser Sniff
+plugin-type: plugin
+tags: 
+title: $:/plugins/tiddlywiki/browser-sniff
+type: application/json
