@@ -1,9 +1,8 @@
 color: #bbb
-draft.of: $:/TagManager
-draft.title: $:/TagManager
+created: 20230804062346823
 icon: $:/core/images/tag-button
-modified: 20230803071031307
-title: Draft of '$:/TagManager'
+modified: 20230804062346823
+title: $:/TagManager
 type: text/vnd.tiddlywiki
 
 \define lingo-base() $:/language/TagManager/
