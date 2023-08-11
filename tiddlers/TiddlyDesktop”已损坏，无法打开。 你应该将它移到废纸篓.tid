@@ -1,0 +1,28 @@
+created: 20230810133923857
+creator: TidGi User
+modified: 20230810141727260
+modifier: TidGi User
+tags: tiddlywiki
+title: TiddlyDesktop”已损坏，无法打开。 你应该将它移到废纸篓
+
+当你尝试打开Mac上的应用程序时，可能会遇到这样的错误信息：“应用程序已损坏，无法打开。你应该将它移到废纸篓”。这种问题可能是由于Mac的Gatekeeper引起的，该功能旨在保护用户免受恶意软件的侵害。
+
+以下是解决此问题的几个建议步骤：
+
+1. **重新下载应用程序**：有时，下载的文件可能在传输过程中损坏。首先尝试从官方源重新下载TiddlyDesktop或其他应用程序。
+
+2. **安全性与隐私设置**：
+    1. 打开“系统偏好设置”。
+    2. 选择“安全性与隐私”。
+    3. 在“一般”标签下，您可能会看到关于TiddlyDesktop的消息。如果是这样，点击“仍然打开”。
+
+3. **终端命令**：如果上述方法不起作用，您可以尝试使用终端绕过Gatekeeper。
+    1. 打开“终端”应用程序。
+    2. 输入以下命令：`sudo xattr -r -d com.apple.quarantine /path/to/application.app`（注意，将`/path/to/application.app`替换为TiddlyDesktop应用程序的实际路径）。
+    3. 输入密码并按回车。
+
+4. **检查应用程序的完整性**：如果您从非官方来源下载应用程序，确保它是从一个可信任的地方获取的。有时，第三方下载链接可能会提供损坏或被修改的文件，这可能会触发Gatekeeper的警报。
+
+5. **查找替代解决方案**：如果您仍然遇到问题，并且TiddlyDesktop始终无法工作，考虑使用TiddlyWiki的其他方式，例如在浏览器中运行或使用Node.js。
+
+最后，确保您的MacOS版本与TiddlyDesktop或任何其他应用程序兼容。如果是一个较老的应用程序，它可能不支持最新版本的MacOS。
