@@ -1,0 +1,16 @@
+created: 20230804071510077
+modified: 20230804071707655
+tags: 飞云滤网双突破
+title: 配置SSH
+type: text/vnd.tiddlywiki
+
+检查ssh公钥
+
+```
+cd ~/.ssh
+```
+如果没有id_rsa和id_rsa.pub这两个就需要生成ssh公钥
+
+```
+ssh-keygen -t rsa -C "xxxx@example.com" (你的邮箱)
+```

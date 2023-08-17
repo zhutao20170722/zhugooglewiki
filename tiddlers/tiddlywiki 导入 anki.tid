@@ -1,0 +1,34 @@
+created: 20230807062250155
+modified: 20230807062317833
+tags: 
+title: tiddlywiki 导入 anki
+
+TiddlyRemember是一个插件，用于从[TiddlyWiki](https://tiddlywiki.com/)中提取内容，以便使用像Anki这样的软件进行间隔重复学习。以下是安装TiddlyRemember的基本步骤：
+
+1. **安装Anki**
+
+   首先确保你已经安装了[Anki](https://apps.ankiweb.net/)。这是一个流行的间隔重复软件，TiddlyRemember需要它来工作。
+
+2. **安装AnkiConnect插件**
+
+   TiddlyRemember通过AnkiConnect插件与Anki通信。要安装它，需要在Anki中选择`Tools > Add-ons > Get Add-ons`，然后输入AnkiConnect的代码（你可以在Anki的官方插件列表中找到）。
+
+3. **下载并安装TiddlyRemember**
+
+   - 打开TiddlyWiki。
+   - 导航到[TiddlyRemember的GitHub页面](https://github.com/sobjornstad/TiddlyRemember)或其他TiddlyRemember的官方资源页。
+   - 下载最新的TiddlyRemember插件，并将其导入到你的TiddlyWiki中。
+
+4. **设置**
+
+   在你的TiddlyWiki中，应该有一个新的Tiddler，其中包含TiddlyRemember的设置。确保正确配置它，使其与Anki和AnkiConnect兼容。
+
+5. **开始使用**
+
+   一旦你设置好了所有东西，就可以开始在TiddlyWiki中创建笔记，并使用TiddlyRemember将它们导出到Anki了。
+
+6. **查阅文档**
+
+   使用TiddlyRemember时，建议查阅其官方文档或GitHub页面，以确保你充分利用其功能并避免可能的问题。
+
+以上是一个大致的安装指南，但根据TiddlyRemember的版本和你的具体需求，可能会有所不同。确保遵循任何与你下载的插件版本相关的官方文档或指南。

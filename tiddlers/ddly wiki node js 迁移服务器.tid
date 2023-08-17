@@ -1,0 +1,10 @@
+created: 20230804093622618
+modified: 20230804093741360
+tags: 
+title: ddly wiki node js 迁移服务器
+type: text/vnd.tiddlywiki
+
+
+```
+tiddlywiki mywiki --listen host=0.0.0.0 port=8080
+```
