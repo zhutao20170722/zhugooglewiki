@@ -1,0 +1,42 @@
+created: 20230820143116786
+creator: TidGi User
+modified: 20230820143131138
+modifier: TidGi User
+tags: [[tiddlywiki 目录宏]]
+title: list 宏
+
+在 TiddlyWiki 中，`list-links` 不是一个标准宏。但是，基于您的要求，我猜您可能是想了解 `list` 宏，它是一个非常有用的工具，可以列出满足某些条件的 tiddlers。以下是有关 `list` 宏的简要介绍：
+
+## `list` 宏
+
+`list` 宏允许您基于特定的过滤器标准列出 tiddlers。以下是一些基本示例：
+
+1. **列出所有 tiddlers**：
+   ```
+   <<list "[all[tiddlers]]">>
+   ```
+
+2. **列出带有特定标签的 tiddlers**：
+   例如，列出所有带有 "guide" 标签的 tiddlers：
+   ```
+   <<list "[tag[guide]]">>
+   ```
+
+3. **列出按修改日期排序的 tiddlers**：
+   ```
+   <<list "[all[tiddlers]sort[modified]]">>
+   ```
+
+这只是 `list` 宏的冰山一角。TiddlyWiki 的过滤器语法非常强大，允许您创建复杂的查询来显示和排序 tiddlers。
+
+如果您想要创建一个 tiddler 的链接列表，而不仅仅是一个文本列表，您可以结合使用过滤器和 `list` 宏。例如，您可以使用如下的 WikiText：
+
+``` 
+<$list filter="[tag[guide]]">
+* [[<$link/>]]
+</$list>
+```
+
+这将为每个带有 "guide" 标签的 tiddler 创建一个链接。
+
+请注意，为了成功使用上述方法，您需要确保您的 TiddlyWiki 版本支持这些功能，并且您正确地输入了 WikiText。

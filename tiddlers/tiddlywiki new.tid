@@ -1,0 +1,21 @@
+created: 20230820143413485
+creator: TidGi User
+modified: 20230820143448506
+modifier: TidGi User
+tags: tiddlywiki
+title: tiddlywiki new
+
+在 TiddlyWiki 中，“New Here” 和 “New Journal Here” 通常是参考创建新 Tiddlers 的按钮或功能。具体的功能可能会根据您使用的 TiddlyWiki 版本或配置有所不同，但一般来说，他们的基本区别如下：
+
+1. **New Here**：
+   - 当您点击这个按钮或选项时，它通常会创建一个新的 Tiddler。
+   - 您可以为这个新 Tiddler 命名，填写内容，并添加标签。
+   - 这是一个通用的新 Tiddler 创建选项，不会有特定的日期或时间戳。
+
+2. **New Journal Here**：
+   - 当您点击这个按钮或选项时，它通常会创建一个新的日志型 Tiddler。
+   - 这个新的日志 Tiddler 通常会自动命名为当前的日期和/或时间。例如：“2023-08-20” 或 “2023-08-20 10:15”。
+   - 这是为了方便您记录每天的日记、笔记或事件，而不必手动输入日期。
+   - 有些版本的 TiddlyWiki 允许您自定义日志的日期和时间格式。
+
+总之，基本的区别在于：“New Here” 是一个通用的新 Tiddler 创建选项，而 “New Journal Here” 是专门用于创建带有当前日期和时间的日志型 Tiddler。
