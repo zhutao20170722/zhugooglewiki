@@ -1,0 +1,45 @@
+created: 20230820232529382
+creator: TidGi User
+modified: 20230820232602419
+modifier: TidGi User
+tags: 
+title: git action
+
+要使 Ubuntu 服务器实现类似于 GitHub Actions 的自动部署功能，你可以使用 CI/CD (持续集成/持续部署) 工具，例如 Jenkins、GitLab CI/CD、Travis CI 等。下面是一个使用 Jenkins 实现自动部署的基本流程：
+
+1. **安装 Jenkins**：
+   - 首先，确保已安装 Java：
+     ```bash
+     sudo apt update
+     sudo apt install openjdk-11-jdk
+     ```
+   - 然后，添加 Jenkins 仓库并安装 Jenkins：
+     ```bash
+     wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
+     sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+     sudo apt update
+     sudo apt install jenkins
+     ```
+
+2. **启动 Jenkins**：
+   ```bash
+   sudo systemctl start jenkins
+   ```
+
+3. **配置 Jenkins**：
+   - 打开浏览器，访问 `http://your_server_ip:8080`。
+   - 跟随屏幕提示完成初始设置。
+
+4. **设置构建任务**：
+   - 创建一个新的 “自由风格” 项目。
+   - 在 "源码管理" 部分中，选择 "Git" 并输入你的 Git 仓库 URL。
+   - 在 "构建触发器" 部分，选择 "轮询 SCM"。这将定期检查 Git 仓库的变化。
+   - 在 "构建" 部分，你可以添加构建步骤，例如编译、测试和部署。
+
+5. **自动部署**：
+   - 在 Jenkins 任务的 "构建后操作" 部分，添加部署步骤。这可能需要使用额外的 Jenkins 插件，例如 "Deploy to container" 插件，取决于你的部署目标。
+   
+6. **Webhooks（可选）**：
+   如果你希望每次推送到 Git 仓库时都触发 Jenkins 任务，你可以在 Git 仓库设置中配置 Webhooks。这样，你的仓库会在有新的代码推送时通知 Jenkins。
+
+这只是一个基本概述，具体的实现和配置会根据你的具体需求和应用场景有所不同。

@@ -1,0 +1,34 @@
+created: 20230820233336635
+creator: TidGi User
+modified: 20230820233358914
+modifier: TidGi User
+tags: 
+title: 格式
+
+为了使 TiddlyWiki 中的文本和代码的格式与 Halo (一款流行的博客系统) 一样，你需要进行一些 CSS 和插件配置。以下是大致的步骤：
+
+1. **安装代码高亮插件**：
+   如果你希望代码块有语法高亮，你可以考虑为 TiddlyWiki 安装一个代码高亮插件，如 `highlight.js` 插件。
+
+2. **自定义 CSS**：
+   为了使文本格式与 Halo 一样，你需要编写或调整 TiddlyWiki 的 CSS。你可以创建一个新的 tiddler，将其类型设置为 `text/css`，然后在其中添加自定义样式。
+
+   例如，要设置正文文本的样式，你可以添加以下 CSS：
+   ```css
+   .tc-tiddler-body {
+     font-family: '你的字体名', sans-serif;
+     font-size: 16px;
+     line-height: 1.6;
+     /* 其他样式属性 */
+   }
+   ```
+
+   对于代码块，你可能需要定制 `.hljs` 类（如果你使用 `highlight.js`）或其他相关类，以匹配 Halo 的样式。
+
+3. **应用更多样式**：
+   根据你的需求，你可能还需要进一步自定义其他元素的样式，例如标题、链接、引用等。
+
+4. **参考 Halo 的样式**：
+   打开 Halo 的主题源码或使用浏览器的开发者工具，查看 Halo 使用的具体样式属性。然后在 TiddlyWiki 中复制或调整这些样式，使其更接近 Halo 的外观。
+
+这只是一个大致的方向。实际操作中，你可能需要根据具体的 Halo 主题和你在 TiddlyWiki 中的需求进行一些调整。
